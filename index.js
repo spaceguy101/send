@@ -30,6 +30,7 @@ var path = require('path')
 var statuses = require('statuses')
 var Stream = require('stream')
 var util = require('util')
+var Throttle = require('throttle')
 
 /**
  * Path function references.
@@ -126,6 +127,11 @@ function SendStream (req, path, options) {
   this._dotfiles = opts.dotfiles !== undefined
     ? opts.dotfiles
     : 'ignore'
+
+  this._throttle = opts.throttle !== undefined
+    ? opts.throttle
+    : { bps: 1024 * 1024 }
+
 
   if (this._dotfiles !== 'ignore' && this._dotfiles !== 'allow' && this._dotfiles !== 'deny') {
     throw new TypeError('dotfiles option must be "allow", "deny", or "ignore"')
@@ -739,11 +745,12 @@ SendStream.prototype.stream = function stream (path, options) {
   var finished = false
   var self = this
   var res = this.res
+  var throttleOpts = this._throttle
 
   // pipe
   var stream = fs.createReadStream(path, options)
   this.emit('stream', stream)
-  stream.pipe(res)
+  stream.pipe(new Throttle(throttleOpts)).pipe(res)
 
   // response finished, done with the fd
   onFinished(res, function onfinished () {
