@@ -1,18 +1,14 @@
-# send
+# send-throttle
 
 [![NPM Version][npm-image]][npm-url]
 [![NPM Downloads][downloads-image]][downloads-url]
-[![Linux Build][travis-image]][travis-url]
-[![Windows Build][appveyor-image]][appveyor-url]
-[![Test Coverage][coveralls-image]][coveralls-url]
-[![Gratipay][gratipay-image]][gratipay-url]
+
+This is fork of [send](https://npmjs.org/package/send) with network throttle using [throttle](https://npmjs.org/package/throttle).
 
 Send is a library for streaming files from the file system as a http response
 supporting partial responses (Ranges), conditional-GET negotiation, high test
 coverage, and granular events which may be leveraged to take appropriate actions
 in your application or framework.
-
-Looking to serve up entire folders mapped to URLs? Try [serve-static](https://www.npmjs.org/package/serve-static).
 
 ## Installation
 
@@ -33,6 +29,12 @@ the Node.js HTTP request and the `path` is a urlencoded path to send (urlencoded
 not the actual file-system path).
 
 #### Options
+
+##### throttle
+
+Enables network throttling , limits download speed, defaults to {bps : 1024 * 1024},
+`bps` is bytes per second. You can pass parameters same as [throttle](https://npmjs.org/package/throttle).
+
 
 ##### acceptRanges
 
@@ -234,7 +236,7 @@ var app = http.createServer(function onRequest (req, res) {
 [MIT](LICENSE)
 
 [npm-image]: https://img.shields.io/npm/v/send.svg
-[npm-url]: https://npmjs.org/package/send
+[npm-url]: https://npmjs.org/package/send-throttle
 [travis-image]: https://img.shields.io/travis/pillarjs/send/master.svg?label=linux
 [travis-url]: https://travis-ci.org/pillarjs/send
 [appveyor-image]: https://img.shields.io/appveyor/ci/dougwilson/send/master.svg?label=windows
