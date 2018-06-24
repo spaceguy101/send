@@ -9,7 +9,10 @@
     "Jesús Leganés Combarro <piranna@gmail.com>"
   ],
   "license": "MIT",
-  "repository": "pillarjs/send",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/spaceguy101/send-throttle.git"
+  },
   "keywords": [
     "static",
     "file",
